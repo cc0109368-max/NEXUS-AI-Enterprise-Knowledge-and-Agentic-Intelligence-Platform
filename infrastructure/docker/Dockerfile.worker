@@ -1,0 +1,7 @@
+FROM python:3.11-slim
+WORKDIR /app
+COPY services/api /app/services/api
+COPY services/worker /app/services/worker
+COPY packages /app/packages
+ENV PYTHONPATH=/app/services/api:/app/services/worker:/app/packages
+CMD ["python3", "-m", "services.worker.app.worker"]
