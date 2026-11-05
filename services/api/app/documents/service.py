@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 import re
+import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import docx
@@ -34,7 +35,7 @@ class DocumentIntelligenceService:
         self.audit = AuditService(self.db)
         self.obs = observability or ObservabilityService(self.db)
         self.llm = get_llm_provider()
-        self.storage_dir = Path("/tmp/nexus-ai/storage")
+        self.storage_dir = Path(tempfile.gettempdir()) / "nexus-ai" / "storage"
         self.storage_dir.mkdir(parents=True, exist_ok=True)
 
     def upload_and_ingest_document(

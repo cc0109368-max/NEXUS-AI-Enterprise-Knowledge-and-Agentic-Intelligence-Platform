@@ -4,6 +4,7 @@ CLI Runner for NEXUS AI 12-Category Evaluation & Benchmarking Suite.
 Saves machine-readable JSON and human-reviewable Markdown benchmark reports.
 '''
 import json
+import tempfile
 from pathlib import Path
 from packages.evaluation.runner import EvaluationBenchmarkEngine
 
@@ -13,8 +14,8 @@ def main():
     summary = result["summary"]
 
     roots = [
-        Path("/tmp/nexus-ai"),
-        Path("/tmp/nexus-ai"),
+        Path(tempfile.gettempdir()) / "nexus-ai",
+        Path(__file__).resolve().parent.parent,
     ]
     md_lines = [
         "# NEXUS AI — Reproducible Evaluation & Benchmark Report",

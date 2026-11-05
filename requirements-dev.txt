@@ -1,0 +1,3 @@
+# NEXUS AI Enterprise Platform - Development & Test Dependencies
+-r requirements.txt
+

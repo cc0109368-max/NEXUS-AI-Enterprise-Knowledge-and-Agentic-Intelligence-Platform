@@ -72,6 +72,15 @@ Executed via `PYTHONPATH=services/api:. python3 scripts/run_benchmarks.py` again
 
 ## 10. Local Installation & Verification Instructions
 ```bash
+# 0. Setup environment and install dependencies
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python -m pip install --upgrade pip
+pip install -r requirements-dev.txt
+
+# Verify core dependencies
+python -c "import docx; print('python-docx import successful')"
+
 # 1. Run the complete 8-suite Acceptance, Security & Integration Test Suite (Scenarios 1-12)
 PYTHONPATH=services/api:. python3 -m unittest discover -s tests -p "test_*.py" -v
 

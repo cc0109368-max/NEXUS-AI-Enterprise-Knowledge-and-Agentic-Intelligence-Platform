@@ -15,14 +15,18 @@ curl -fsS http://localhost:8000/api/v1/ready
 
 ## 2. Standalone Local Execution (Without Docker Daemon)
 ```bash
+# Install runtime & test dependencies
+python3 -m pip install --upgrade pip
+pip install -r requirements-dev.txt
+
 # Run automated verification & acceptance suite (uses local SQLite FTS5 + Vector adapter)
-PYTHONPATH=services/api:packages python3 -m unittest discover -s tests -p "test_*.py" -v
+PYTHONPATH=services/api:. python3 -m unittest discover -s tests -p "test_*.py" -v
 
 # Run repeatable evaluation benchmark suite
-PYTHONPATH=services/api:packages python3 scripts/run_benchmarks.py
+PYTHONPATH=services/api:. python3 scripts/run_benchmarks.py
 
 # Start FastAPI server locally
-PYTHONPATH=services/api:packages uvicorn app.main:app --host 0.0.0.0 --port 8000
+PYTHONPATH=services/api:. uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 ## 3. Database Migrations

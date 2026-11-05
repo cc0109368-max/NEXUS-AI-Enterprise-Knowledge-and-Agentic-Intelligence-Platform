@@ -11,15 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Verify Core Dependencies
+        run: |
+          python -c "import docx; print('python-docx import successful')"
+          python -c "import openpyxl, pypdf, pandas, numpy, fastapi, httpx; print('all core dependencies import successful')"
+
       - name: Run Backend & Security Acceptance Suite
         env:
-          PYTHONPATH: services/api:packages
+          PYTHONPATH: services/api:packages:.
         run: python3 -m unittest discover -s tests -p "test_*.py" -v
+
       - name: Execute Reproducible RAG & Agent Benchmark Suite
         env:
-          PYTHONPATH: services/api:packages
+          PYTHONPATH: services/api:packages:.
         run: python3 scripts/run_benchmarks.py

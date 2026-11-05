@@ -1,10 +1,14 @@
 import os
+import tempfile
 from dataclasses import dataclass
+from pathlib import Path
+
+DEFAULT_SQLITE_PATH = str(Path(tempfile.gettempdir()) / "nexus-ai" / "nexus_ai.db")
 
 @dataclass
 class Settings:
     env: str = os.getenv("NEXUS_ENV", "development")
-    db_path: str = os.getenv("NEXUS_DB_PATH", "/tmp/nexus-ai/nexus_ai.db")
+    db_path: str = os.getenv("NEXUS_DB_PATH", DEFAULT_SQLITE_PATH)
     db_url: str = os.getenv("NEXUS_DB_URL", "postgresql://nexus:nexus_dev_password@localhost:5432/nexus_ai")
     jwt_secret: str = os.getenv("NEXUS_JWT_SECRET", "nexus-enterprise-hmac-sha256-secret-key-2026-v1")
     access_token_expire_minutes: int = int(os.getenv("NEXUS_ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
